@@ -1,0 +1,17 @@
+/APIManager/bin/
+/APIManager/obj/
+*.log
+*.tmp
+*.temp
+*.mdf
+*.ldf
+*.nupkg
+/APIManager/packages/
+*.[Oo]bj
+*.[Cc]ache
+*.[Cc]sproj
+*.[Cc]sproj.user
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Tt]emp/
