@@ -1,0 +1,88 @@
+:root {
+    --background-color: #13152D;
+    --text-color: #E0E0E0;
+    --accent-red: #E14267;
+    --accent-purple: #3A4191;
+    --accent-orange: #F5A913;
+}
+
+/*
+    Fondo: Casi negro (#121212) o muy oscuro gris azulado (#1E1E2D).
+    Texto: Gris claro (#E0E0E0) para ofrecer un contraste óptimo sin ser demasiado brillante.
+    Acentos: Colores brillantes como cian (#0ABDC6), magenta (#C400C6) o neón verde (#7ED957) para resaltar elementos importantes como botones, enlaces y iconos.
+    Bordes y Separadores: Gris oscuro (#333333) para mantener una separación clara de los componentes.
+*/
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.request-control {
+    display: flex; /* Establece el modelo de caja a flex */
+    align-items: center; /* Alinea verticalmente los elementos al centro */
+}
+
+.form-control:focus {
+    outline: 2px solid #0ABDC6; /* Cambia el color aquí al deseado */
+    box-shadow: 0 0 0 0.2rem rgba(10, 189, 198, 0.25);
+} 
+
+#method {
+    width: auto; /* Restablece cualquier ancho predeterminado para el select */
+    flex-grow: 0; /* Evita que el select crezca y solo ocupe el espacio de sus opciones */
+    background-color: var(--accent-purple);
+    color: var(--text-color);
+    border: none;
+}
+
+#request-body {
+    height: 60vh;
+}
+
+/*
+BOTONES Y ENLACES
+button, .button {
+    background-color: var(--accent-cyan);
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+button:hover, .button:hover {
+    background-color: var(--accent-magenta);
+}
+
+a {
+    color: var(--accent-green);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+BORDES Y SEPARADORES
+.panel {
+    border: 1px solid var(--border-color);
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+
+hr {
+    border-top: 1px solid var(--border-color);
+}
+
+*/
