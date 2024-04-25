@@ -31,6 +31,10 @@ body {
     box-shadow: 0 0 0 0.2rem rgba(10, 189, 198, 0.25);
 } 
 
+.btn:focus {
+    outline: 2px solid #0ABDC6;
+}
+
 #method {
     width: auto; /* Restablece cualquier ancho predeterminado para el select */
     flex-grow: 0; /* Evita que el select crezca y solo ocupe el espacio de sus opciones */
@@ -40,9 +44,17 @@ body {
 }
 
 #request-body {
-    height: 60vh;
+    height: 30vh;
 }
 
+#send {
+    background-color: var(--accent-purple);
+    color: var(--text-color);
+}
+
+#response {
+    height: 55vh;
+}
 /*
 BOTONES Y ENLACES
 button, .button {
