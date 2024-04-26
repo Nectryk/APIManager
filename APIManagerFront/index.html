@@ -1,32 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>APIManager</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="styles/styles.css">
-</head>
-<body>
-    <div class="container">
-        <div class="request-control mx-auto mt-3">
-            <select class="form-control" id="method">
-                <option value="get">GET</option>
-                <option value="head">HEAD</option>
-                <option value="post">POST</option>
-                <option value="put">PUT</option>
-                <option value="delete">DELETE</option>
-            </select>
-            <input type="text" class="ml-2 form-control bg-dark text-white" id="url" placeholder="Enter URL here...">
-            <button type="button" class="btn ml-2" id="send">Enviar</button>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>APIManager</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="styles/styles.css">
+    </head>
+    <body>
+        <div class="container">
+            <div class="request-control mx-auto mt-3">
+                <select class="form-control" id="method">
+                    <option value="GET">GET</option>
+                    <option value="HEAD">HEAD</option>
+                    <option value="POST">POST</option>
+                    <option value="PUT">PUT</option>
+                    <option value="DELETE">DELETE</option>
+                </select>
+                <input type="text" class="ml-2 form-control bg-dark text-white" id="url" placeholder="Enter URL here...">
+                <button type="button" class="btn ml-2" id="send">Enviar</button>
+            </div>
+            <div class="mt-3" id="request-body-container" style="display: none;">
+                <textarea id="request-body" class="form-control bg-dark text-white" placeholder="Enter request body here..."></textarea>
+            </div>
+            <div class="mt-3" id="response-container">
+                <textarea id="response" class="form-control bg-dark text-white" placeholder="Response" disabled aria-label="API Response"></textarea>
+            </div>
         </div>
-        <div class="mt-3" id="request-body-container" style="display: none;">
-            <textarea id="request-body" class="form-control bg-dark text-white" placeholder="Enter request body here..."></textarea>
-        </div>
-        <div class="mt-3" id="response-container">
-            <textarea id="response" class="form-control bg-dark text-white" placeholder="Response" disabled aria-label="API Response"></textarea>
-        </div>
-    </div>
-    <script src="js/app.js"></script>
-</body>
+        <script src="js/app.js"></script>
+    </body>
 </html>
