@@ -6,6 +6,8 @@ document.getElementById('method').addEventListener('change', toggleRequestBodyVi
 
 document.getElementById('send').addEventListener('click', sendRequest);
 
+document.getElementById('add-header').addEventListener('click', addHeader);
+
 function toggleRequestBodyVisibility() {
     let method = document.getElementById('method').value;
     const bodyContainer = document.getElementById('request-body-container');
@@ -77,3 +79,15 @@ async function sendRequest() {
     }
 }
 
+function addHeader() {
+    let headersParent = document.getElementById('headers');
+    let newHeader = document.createElement('div');
+
+    newHeader.className = 'header-pair row mt-3';
+    newHeader.innerHTML = '<div class="col-sm-3"><input type="text" placeholder="Header Key" class="header-key form-control bg-dark text-white"></div><div class="col-sm-3"><input type="text" placeholder="Header Value" class="header-value form-control bg-dark text-white"></div><div class="col-sm-3"><button type="button" class="btn btn-danger" onclick="removeHeader(this)">🗑</button></div>';
+    headersParent.append(newHeader);
+}
+
+function removeHeader(button) {
+    button.parentElement.parentElement.remove();
+}
