@@ -23,7 +23,7 @@ async function sendRequest() {
     let url = document.getElementById('url').value;
     const responseDisplay = document.getElementById('response');
     const body = document.getElementById('request-body').value;
-    console.log(body)
+    const headersUser = getHeaders();
 
     let conf;
 
@@ -64,6 +64,10 @@ async function sendRequest() {
             break;
     }
 
+    if(headersUser) {
+        conf["headers"] = new Headers(headersUser);
+    }
+    console.log(conf)
     try {
         console.log(conf);
         const response = await fetch(url, conf)
@@ -84,10 +88,27 @@ function addHeader() {
     let newHeader = document.createElement('div');
 
     newHeader.className = 'header-pair row mt-3';
-    newHeader.innerHTML = '<div class="col-sm-3"><input type="text" placeholder="Header Key" class="header-key form-control bg-dark text-white"></div><div class="col-sm-3"><input type="text" placeholder="Header Value" class="header-value form-control bg-dark text-white"></div><div class="col-sm-3"><button type="button" class="btn btn-danger" onclick="removeHeader(this)">🗑</button></div>';
+    newHeader.innerHTML = '<div class="col-sm-3 header-key-container"><input type="text" placeholder="Header Key" class="header-key form-control bg-dark text-white"></div><div class="col-sm-3 header-value-container"><input type="text" placeholder="Header Value" class="header-value form-control bg-dark text-white"></div><div class="col-sm-3"><button type="button" class="btn btn-danger" onclick="removeHeader(this)">🗑</button></div>';
     headersParent.append(newHeader);
 }
 
 function removeHeader(button) {
     button.parentElement.parentElement.remove();
 }
+
+function getHeaders() {
+    const headers = {}
+    const headersPair = document.querySelectorAll('.header-pair');
+    headersPair.forEach(pair => {
+        const key = pair.querySelector('.header-key-container').querySelector('.header-key').value.trim();
+        const value = pair.querySelector('.header-value-container').querySelector('.header-value').value.trim();
+        console.log(key)
+        console.log(value)
+
+        if (key && value) {
+            headers[key] = value;
+        }
+    });
+    return headers;
+}
+
