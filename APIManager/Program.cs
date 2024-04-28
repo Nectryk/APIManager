@@ -7,6 +7,18 @@ namespace APIManager
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddControllers();
+            builder.Services.AddHttpClient();
+
+            // Configura CORS
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                });
+            });
 
             var app = builder.Build();
 
@@ -19,6 +31,8 @@ namespace APIManager
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
+            // Aplica la política CORS
+            app.UseCors("AllowAll");
 
             app.MapControllers();
 
