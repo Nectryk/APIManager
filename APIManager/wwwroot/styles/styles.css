@@ -35,7 +35,7 @@ body {
     outline: 2px solid #0ABDC6;
 }
 
-#method {
+.options {
     width: auto; /* Restablece cualquier ancho predeterminado para el select */
     flex-grow: 0; /* Evita que el select crezca y solo ocupe el espacio de sus opciones */
     background-color: var(--accent-purple);

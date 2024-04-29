@@ -10,7 +10,7 @@
     <body>
         <div class="container">
             <div class="request-control mx-auto mt-3">
-                <select class="form-control" id="method">
+                <select class="form-control options" id="method">
                     <option value="GET">GET</option>
                     <option value="HEAD">HEAD</option>
                     <option value="POST">POST</option>
@@ -18,8 +18,15 @@
                     <option value="DELETE">DELETE</option>
                 </select>
                 <input type="text" class="ml-2 form-control bg-dark text-white" id="url" placeholder="Enter URL here...">
+                <select class="form-control ml-2 options" id="auth">
+                    <option value="none">No Auth</option>
+                    <option value="basic">Basic Auth</option>
+                    <option value="bearer">Bearer Token</option>
+                    <option value="oauth2">OAuth2</option>
+                </select>
                 <button type="button" class="btn ml-2" id="send">Enviar</button>
             </div>
+            <div id="auth-details" class="mt-3"></div>
             <div id="headers">
                 <div class="header-pair row mt-3">
                     <div class="col-sm-3 header-key-container">
