@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Text;
 
 namespace APIManager.Controllers
 {
@@ -41,7 +42,16 @@ namespace APIManager.Controllers
             if (response.IsSuccessStatusCode)
             {
                 var responseContent = await response.Content.ReadAsStringAsync();
-                return Ok(responseContent);
+                Response.ContentType = "application/json";
+                Response.StatusCode = (int)response.StatusCode;
+
+                foreach (var header in response.Headers)
+                {
+                    Response.Headers[header.Key] = header.Value.ToArray();
+                }
+
+                await Response.WriteAsync(responseContent);
+                return new EmptyResult();
             }
             else
             {

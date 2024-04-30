@@ -56,14 +56,22 @@ async function sendRequest() {
 
 
     try {
+        console.log(conf)
         const response = await fetch(serverURL, conf);
         if (!response.ok) {
             throw new Error(`HTTP ERROR: ${response.status}`);
         }
-        console.log(methodSelected)
         if (methodSelected !== "HEAD") {
             const data = await response.json();
+            console.log(data);
             responseDisplay.value = JSON.stringify(data, null, 2);
+
+            const responseHeaders = response.headers.entries();
+            let headersText = "";
+            for(let [key, value] of responseHeaders){
+                headersText += `${key}: ${value}\n`;
+            }
+            document.getElementById('response-headers').value = headersText;
         } else {
             responseDisplay.value = "HEAD request was successful; no body returned.";
         }
