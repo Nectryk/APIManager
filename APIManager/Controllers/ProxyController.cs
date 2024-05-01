@@ -39,19 +39,23 @@ namespace APIManager.Controllers
             }
 
             var response = await client.SendAsync(requestMessage);
+            var stream = await response.Content.ReadAsStreamAsync();
             if (response.IsSuccessStatusCode)
             {
-                var responseContent = await response.Content.ReadAsStringAsync();
-                Response.ContentType = "application/json";
-                Response.StatusCode = (int)response.StatusCode;
+                return new FileStreamResult(stream, response.Content.Headers.ContentType?.ToString());
+                // var responseContent = await response.Content.ReadAsStringAsync();
+                
+                // Response.ContentType = "application/json";
+                // Response.StatusCode = (int)response.StatusCode;
 
-                foreach (var header in response.Headers)
-                {
-                    Response.Headers[header.Key] = header.Value.ToArray();
-                }
+                // foreach (var header in response.Headers)
+                // {
+                //     Response.Headers[header.Key] = header.Value.ToArray();
+                //     Console.WriteLine($"{header.Key}: {header.Value.FirstOrDefault()}");
+                // }
 
-                await Response.WriteAsync(responseContent);
-                return new EmptyResult();
+                // await Response.WriteAsync(responseContent);
+                // return new EmptyResult();
             }
             else
             {
