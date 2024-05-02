@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
+using System.Text.Json;
 
 namespace APIManager.Controllers
 {
@@ -39,23 +40,23 @@ namespace APIManager.Controllers
             }
 
             var response = await client.SendAsync(requestMessage);
-            var stream = await response.Content.ReadAsStreamAsync();
+            var responseContent = await response.Content.ReadAsStringAsync();
+
             if (response.IsSuccessStatusCode)
             {
-                return new FileStreamResult(stream, response.Content.Headers.ContentType?.ToString());
-                // var responseContent = await response.Content.ReadAsStringAsync();
+                var apiResponse = new ApiResponse{
+                    Data = JsonSerializer.Deserialize<object>(responseContent),
+                    // Data = JsonConvert.DeserializeObject(responseContent),
+                    Headers = new Dictionary<string, string>(),
+                };
+                Console.WriteLine(apiResponse.Data);
                 
-                // Response.ContentType = "application/json";
-                // Response.StatusCode = (int)response.StatusCode;
+                foreach (var header in response.Headers.Concat(response.Content.Headers))
+                {
+                    apiResponse.Headers[header.Key] = string.Join(", ", header.Value);
+                }
 
-                // foreach (var header in response.Headers)
-                // {
-                //     Response.Headers[header.Key] = header.Value.ToArray();
-                //     Console.WriteLine($"{header.Key}: {header.Value.FirstOrDefault()}");
-                // }
-
-                // await Response.WriteAsync(responseContent);
-                // return new EmptyResult();
+                return Ok(apiResponse);
             }
             else
             {
@@ -69,5 +70,11 @@ namespace APIManager.Controllers
         public string? Method { get; set; }
         public Dictionary<string, string>? Headers { get; set; }
         public string? Body { get; set; }
+    }
+
+    public class ApiResponse
+    {
+        public Dictionary<string, string> Headers { get; set; }
+        public object Data { get; set; }
     }
 }
