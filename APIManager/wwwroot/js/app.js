@@ -64,13 +64,14 @@ async function sendRequest() {
         if (methodSelected !== "HEAD") {
             const data = await response.json();
             console.log(data);
-            responseDisplay.value = JSON.stringify(data, null, 2);
+            responseDisplay.value = JSON.stringify(data.data, null, 2);
 
             const responseHeaders = response.headers.entries();
             let headersText = "";
-            for(let [key, value] of responseHeaders){
-                headersText += `${key}: ${value}\n`;
-            }
+            // for(let [key, value] of responseHeaders){
+            //     headersText += `${key}: ${value}\n`;
+            // }
+            headersText = JSON.stringify(data.headers, null, 2);
             document.getElementById('response-headers').value = headersText;
         } else {
             responseDisplay.value = "HEAD request was successful; no body returned.";

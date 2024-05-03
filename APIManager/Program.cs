@@ -9,6 +9,11 @@ namespace APIManager
             builder.Services.AddControllers();
             builder.Services.AddHttpClient();
 
+            builder.Services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+            });
+
             // Configura CORS
             builder.Services.AddCors(options =>
             {

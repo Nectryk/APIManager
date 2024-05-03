@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Text.Json;
-
+using System.Xml.Linq;
 namespace APIManager.Controllers
 {
     [ApiController]
@@ -14,6 +14,23 @@ namespace APIManager.Controllers
         public ProxyController(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
+        }
+
+        private static void ParseElement(XElement element, Dictionary<string, object> json)
+        {
+            if (!element.HasElements)
+            {
+                json[element.Name.LocalName] = element.Value.Trim();
+            }
+            else
+            {
+                var subJson = new Dictionary<string, object>();
+                foreach (var subElement in element.Elements())
+                {
+                    ParseElement(subElement, subJson);
+                }
+                json[element.Name.LocalName] = subJson;
+            }
         }
 
         [HttpPost("makeRequest")]
@@ -45,11 +62,29 @@ namespace APIManager.Controllers
             if (response.IsSuccessStatusCode)
             {
                 var apiResponse = new ApiResponse{
-                    Data = JsonSerializer.Deserialize<object>(responseContent),
-                    // Data = JsonConvert.DeserializeObject(responseContent),
+                    Data = null,
                     Headers = new Dictionary<string, string>(),
                 };
-                Console.WriteLine(apiResponse.Data);
+
+                var contentType = response.Content.Headers.ContentType?.MediaType;
+                Console.WriteLine(contentType);
+
+                if (contentType == "application/json" || contentType == "text/json")
+                {
+                    apiResponse.Data = JsonSerializer.Deserialize<object>(responseContent);
+                }
+                else if (contentType == "application/xml")
+                {
+                    var document = XDocument.Parse(responseContent);
+                    var json = new Dictionary<string, object>();
+                    ParseElement(document.Root, json);
+                    string jsonString = JsonSerializer.Serialize(json, new JsonSerializerOptions { WriteIndented = true });
+                    apiResponse.Data = JsonSerializer.Deserialize<object>(jsonString);
+                }
+                else
+                {
+                    apiResponse.Data = responseContent;
+                }
                 
                 foreach (var header in response.Headers.Concat(response.Content.Headers))
                 {
